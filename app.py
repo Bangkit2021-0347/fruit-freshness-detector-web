@@ -92,6 +92,10 @@ def api_recognize():
 def index_page():
     return render_template("index.html")
 
+@app.route("/purchase", methods=["POST"])
+def purchase_page():
+    return render_template("purchase.html")
+
 @app.route("/checkout", methods=["POST"])
 def checkout_page():
     cv_image = imdecode_image(request.files["image"])

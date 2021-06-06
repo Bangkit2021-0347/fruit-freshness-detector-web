@@ -38,6 +38,12 @@ class AppTestCase(unittest.TestCase):
     self.assertTrue("Harga Setelah didiskon" in resp_text)
     self.assertTrue("Beli" in resp_text)
   
+  def test_post_purchase(self):
+    resp = self.client.post("/purchase")
+    self.assertEqual(resp.status_code, 200)
+    resp_text = resp.get_data(as_text=True)
+    self.assertTrue("Terima kasih telah membeli" in resp_text)
+  
   def test_recognition_api_bad_request(self):
     resp = self.client.post("/api/recognize", data={})
     self.assertEqual(resp.status_code, 400)
