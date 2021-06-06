@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 {% block body %}
+  <header>
+    <img src="/static/image/bangkit.jpg" alt="Gambar bangkit" class="d-block mx-auto mb-3">
+    <h2 class="mb-3 fw-normal text-center">Bangkit Academy</h2>
+    <h2 class="mb-0 fw-normal text-center">Deteksi Kematangan Buah</h2>
+    <br>
+  </header>
+
   <form class="mx-auto small-container" method="post" enctype="multipart/form-data" action="/checkout">
     <div class="mb-3">
       <label for="image" class="form-label">File Gambar</label>
