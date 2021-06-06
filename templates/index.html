@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block body %}
-  <form class="mx-auto small-container" method="post" enctype="multipart/form-data">
+  <form class="mx-auto small-container" method="post" enctype="multipart/form-data" action="/checkout">
     <div class="mb-3">
       <label for="image" class="form-label">File Gambar</label>
       <input type="file" id="image" name="image" class="form-control" accept="image/*" capture required autofocus>

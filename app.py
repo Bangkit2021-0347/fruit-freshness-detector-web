@@ -4,6 +4,7 @@ import torch
 import numpy as np
 from torchvision import transforms
 import cv2
+import base64
 from net import Net
 
 app = Flask(__name__)
@@ -22,6 +23,27 @@ def get_model():
         )
 
     return MODEL
+
+def freshness_label(freshness_percentage):
+    """Give freshness label"""
+    if freshness_percentage > 90:
+        return "Segar"
+    elif freshness_percentage > 65:
+        return "Baik"
+    elif freshness_percentage > 50:
+        return "Cukup Baik"
+    elif freshness_percentage > 0:
+        return "Tidak Baik"
+    else:
+        return "Busuk"
+
+
+def price_text(price):
+    """Give price text to be rendered in HTML"""
+    if price == 0:
+        return "Gratis"
+
+    return str(price)
 
 
 def get_price(freshness_percentage):
@@ -69,3 +91,21 @@ def api_recognize():
 @app.route("/")
 def index_page():
     return render_template("index.html")
+
+@app.route("/checkout", methods=["POST"])
+def checkout_page():
+    cv_image = imdecode_image(request.files["image"])
+    recognize_result = recognize(cv_image)
+    freshness_percentage = recognize_result["freshness_level"]
+
+    # show submitted image
+    image_content = cv2.imencode('.jpg', cv_image)[1].tobytes()
+    encoded_image = base64.encodebytes(image_content)
+    base64_image = 'data:image/jpg;base64, ' + str(encoded_image, 'utf-8')
+    return render_template(
+        "checkout.html",
+        freshness_percentage=freshness_percentage,
+        freshness_label=freshness_label(freshness_percentage),
+        base64_image=base64_image,
+        price=price_text(recognize_result["price"])
+    )
