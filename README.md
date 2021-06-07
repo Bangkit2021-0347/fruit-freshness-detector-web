@@ -1,3 +1,5 @@
+[![Test](https://github.com/Bangkit2021-0347/fruit-freshness-detector-web/actions/workflows/test.yml/badge.svg)](https://github.com/Bangkit2021-0347/fruit-freshness-detector-web/actions/workflows/test.yml)
+
 # Fruit freshness detector web app for Bangkit Capstone Project 2021
 
 Our website for Bangkit Capstone Project that can predict the level of ripeness of fruits and how much the cost would be.
