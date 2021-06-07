@@ -1,4 +1,4 @@
-# website-fruits-classification
+# Fruit freshness detector web app for Bangkit Capstone Project 2021
 
 Our website for Bangkit Capstone Project that can predict the level of ripeness of fruits and how much the cost would be.
 
