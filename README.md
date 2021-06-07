@@ -30,6 +30,10 @@ or in windows
 ```
 .\venv\bin\activate
 ```
+run flask app
+```bash
+flask run
+```
 Type http://127.0.0.1:5000/ on your browser.
 
 
