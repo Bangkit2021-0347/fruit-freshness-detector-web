@@ -1,6 +1,6 @@
 # website-fruits-classification
 
-Our website for Bangkit Capstone Project that can predict the level of ripeness of fruits
+Our website for Bangkit Capstone Project that can predict the level of ripeness of fruits and how much the cost would be.
 
 ## Run locally
 
@@ -9,7 +9,7 @@ or
 use this command.
 
 ```bash
-cd PATH_TO/website-fruits-classification
+cd PATH_TO/fruit-freshness-detector-web
 ```
 Use [pip](https://pip.pypa.io/en/stable/) to install dependencies.
 
@@ -36,6 +36,22 @@ flask run
 ```
 Type http://127.0.0.1:5000/ on your browser.
 
+## Deploy to cloud
+
+Heroku Deployment
+```bash
+heroku login
+heroku git:clone -a fruit-freshness-detector-web
+cd fruit-freshness-detector-web
+git add .
+git commit -am "make it better"
+git push heroku master
+```
+App Engine Google Cloud Platform Deployment
+```bash
+gcloud builds submit --tag gcr.io/PROJECT-ID/fruit-freshness-detector-web
+gcloud run deploy --image gcr.io/PROJECT-ID/fruit-freshness-detector-web  
+```
 
 ## API
 
