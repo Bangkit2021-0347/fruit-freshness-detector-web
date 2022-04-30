@@ -4,39 +4,44 @@
 
 Our website for Bangkit Capstone Project that can predict the level of ripeness of fruits and how much the cost would be.
 
-## Run locally
+## Requirements 
 
-Go to the project folder
-or
-use this command.
+## Setup
 
+Clone this repository and go to the cloned folder.
 ```bash
-cd PATH_TO/fruit-freshness-detector-web
+git clone https://github.com/Bangkit2021-0347/fruit-freshness-detector-web.git
+cd fruit-freshness-detector-web
 ```
-Use [pip](https://pip.pypa.io/en/stable/) to install dependencies.
 
-```bash
-pip install -r requirements.txt
-```
+
 Create python virtual environment.
-
 ```bash
 pip install virtualenv
 virtualenv venv
 ```
-initialize virtual environment
+
+Initialize virtual environment
 ```bash
 source venv/bin/activate
 ```
-or in windows
+or use this if you are using windows
 ```
 .\venv\bin\activate
 ```
-run flask app
+
+
+Install dependencies using [pip](https://pip.pypa.io/en/stable/).
+```bash
+pip install -r requirements.txt
+```
+
+run the app with Flask
 ```bash
 flask run
 ```
-Type http://127.0.0.1:5000/ on your browser.
+
+and lastly, open http://127.0.0.1:5000/ on your browser.
 
 ## Deploy to cloud
 
