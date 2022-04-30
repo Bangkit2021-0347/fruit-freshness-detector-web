@@ -4,7 +4,9 @@
 
 Our website for Bangkit Capstone Project that can predict the level of ripeness of fruits and how much the cost would be.
 
-## Requirements 
+## Prerequisite
+
+- Python 3
 
 ## Setup
 
