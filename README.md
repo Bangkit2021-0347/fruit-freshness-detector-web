@@ -45,9 +45,9 @@ flask run
 
 and lastly, open http://127.0.0.1:5000/ on your browser.
 
-## Deploy to cloud
+## Deployment
 
-Heroku Deployment
+### Deploy to Heroku
 ```bash
 heroku login
 heroku git:clone -a fruit-freshness-detector-web
@@ -56,7 +56,13 @@ git add .
 git commit -am "make it better"
 git push heroku master
 ```
-App Engine Google Cloud Platform Deployment
+
+### Deploy to Google App Engine
+```bash
+gcloud app deploy
+```
+
+### Deploy to Google Cloud Run
 ```bash
 gcloud builds submit --tag gcr.io/PROJECT-ID/fruit-freshness-detector-web
 gcloud run deploy --image gcr.io/PROJECT-ID/fruit-freshness-detector-web  
