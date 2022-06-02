@@ -8,21 +8,21 @@ import base64
 from net import Net
 
 app = Flask(__name__)
-MODEL = None
-MODEL_FILE = "model.pt"
+ML_MODEL = None
+ML_MODEL_FILE = "model.pt"
 TORCH_DEVICE = "cpu"
 
 
 def get_model():
-    """Return ML model"""
-    global MODEL
-    if not MODEL:
-        MODEL = Net()
-        MODEL.load_state_dict(
-            torch.load(MODEL_FILE, map_location=torch.device(TORCH_DEVICE))
+    """Loading the ML model once and returning the ML model"""
+    global ML_MODEL
+    if not ML_MODEL:
+        ML_MODEL = Net()
+        ML_MODEL.load_state_dict(
+            torch.load(ML_MODEL_FILE, map_location=torch.device(TORCH_DEVICE))
         )
 
-    return MODEL
+    return ML_MODEL
 
 def freshness_label(freshness_percentage):
     """Give freshness label"""
@@ -37,20 +37,17 @@ def freshness_label(freshness_percentage):
     else:
         return "Busuk"
 
-
-def price_text(price):
-    """Give price text to be rendered in HTML"""
+def price_to_text(price):
     if price == 0:
         return "Gratis"
 
     return str(price)
 
-
-def get_price(freshness_percentage):
+def price_by_freshness_percentage(freshness_percentage):
     return int(freshness_percentage/100*10000)
 
 
-def get_freshness_percentage(cv_image):
+def freshness_percentage_by_cv_image(cv_image):
     """
     Reference: https://github.com/anshuls235/freshness-detector/blob/4cd289fb05a14d3c710813fca4d8d03987d656e5/main.py#L40
     """
@@ -75,18 +72,20 @@ def imdecode_image(image_file):
         cv2.IMREAD_UNCHANGED
     )
 
-def recognize(cv_image):
-    freshness_percentage = get_freshness_percentage(cv_image)
+def recognize_fruit_by_cv_image(cv_image):
+    freshness_percentage = freshness_percentage_by_cv_image(cv_image)
     return {
+        # TODO: change freshness_level to freshness_percentage
         "freshness_level": freshness_percentage,
-        "price": get_price(freshness_percentage)
+        "price": price_by_freshness_percentage(freshness_percentage)
     }
+
+## API
 
 @app.route('/api/recognize', methods=["POST"])
 def api_recognize():
     cv_image = imdecode_image(request.files["image"])
-    return recognize(cv_image)
-
+    return recognize_fruit_by_cv_image(cv_image)
 
 @app.route("/")
 def index_page():
@@ -99,8 +98,9 @@ def purchase_page():
 @app.route("/checkout", methods=["POST"])
 def checkout_page():
     cv_image = imdecode_image(request.files["image"])
-    recognize_result = recognize(cv_image)
-    freshness_percentage = recognize_result["freshness_level"]
+    fruit_information = recognize_fruit_by_cv_image(cv_image)
+    # TODO: change freshness_level to freshness_percentage
+    freshness_percentage = fruit_information["freshness_level"]
 
     # show submitted image
     image_content = cv2.imencode('.jpg', cv_image)[1].tobytes()
@@ -111,5 +111,5 @@ def checkout_page():
         freshness_percentage=freshness_percentage,
         freshness_label=freshness_label(freshness_percentage),
         base64_image=base64_image,
-        price=price_text(recognize_result["price"])
+        price=price_to_text(fruit_information["price"])
     )
