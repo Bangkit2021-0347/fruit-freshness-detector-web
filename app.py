@@ -12,7 +12,6 @@ ML_MODEL = None
 ML_MODEL_FILE = "model.pt"
 TORCH_DEVICE = "cpu"
 
-
 def get_model():
     """Loading the ML model once and returning the ML model"""
     global ML_MODEL
@@ -25,7 +24,6 @@ def get_model():
     return ML_MODEL
 
 def freshness_label(freshness_percentage):
-    """Give freshness label"""
     if freshness_percentage > 90:
         return "Segar"
     elif freshness_percentage > 65:
@@ -45,7 +43,6 @@ def price_to_text(price):
 
 def price_by_freshness_percentage(freshness_percentage):
     return int(freshness_percentage/100*10000)
-
 
 def freshness_percentage_by_cv_image(cv_image):
     """
@@ -86,6 +83,8 @@ def recognize_fruit_by_cv_image(cv_image):
 def api_recognize():
     cv_image = imdecode_image(request.files["image"])
     return recognize_fruit_by_cv_image(cv_image)
+
+## Web pages
 
 @app.route("/")
 def index_page():
